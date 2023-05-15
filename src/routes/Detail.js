@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Detail() {
@@ -6,18 +6,18 @@ function Detail() {
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState({});
 
-  const getMovie = async () => {
-    await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setMovie(json.data.movie);
-        setLoading(false);
-      });
-  };
+  const getMovie = useCallback(async () => {
+    const json = await fetch(
+      `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`
+    ).then((res) => res.json());
+
+    setMovie(json.data.movie);
+    setLoading(false);
+  }, [id]);
 
   useEffect(() => {
     getMovie();
-  }, []);
+  }, [getMovie]);
 
   return (
     <div>
