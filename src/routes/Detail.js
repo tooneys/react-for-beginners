@@ -20,7 +20,15 @@ function Detail() {
   }, [getMovie]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url(${movie.background_image_original})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+      }}
+    >
       <h2>Detail</h2>
       <hr />
       {loading ? (
@@ -29,14 +37,15 @@ function Detail() {
         <div>
           <img src={movie.large_cover_image} alt={movie.title}></img>
           <h1>{movie.title}</h1>
-          <div>
+          <div className="inline">
             Rating: <p>{movie.rating}</p>
           </div>
           <hr />
-          <label>장르</label>
-          <ul>
+          <ul className="list-inline">
             {movie.genres.map((g) => (
-              <li key={g}>{g}</li>
+              <li key={g} className="list-inline-item">
+                {g}
+              </li>
             ))}
           </ul>
         </div>
